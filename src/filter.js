@@ -1,10 +1,11 @@
 //filter.js 过滤器集合
 import util from 'common/js/util'
-import indexFilder from 'pages/index/filter'
 import accounting from 'accounting'
 
 //定义用的路由集合
-let arrFilder = [indexFilder];
+let arrFilder = [
+	require('pages/index/filter'),
+];
 
 let json = {};
 
