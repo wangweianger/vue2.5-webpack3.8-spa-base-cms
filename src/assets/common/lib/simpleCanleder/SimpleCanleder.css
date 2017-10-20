@@ -1,0 +1,90 @@
+﻿#SimpleCanleder_Year_Month * {
+    margin: 0px;
+    padding: 0px;
+}
+
+#SimpleCanleder_Year_Month .clear {
+    clear: both;
+}
+
+#SimpleCanleder_Year_Month {
+    width: 158px;
+    font-size: 14px;
+    line-height: 14px;
+    border: 1px solid lavender;
+    padding: 10px 0 10px 10px;
+    padding-top: 5px;
+    padding-right: 5px;
+    position: absolute;
+    background-color: white;
+}
+
+    #SimpleCanleder_Year_Month .title {
+        height: 35px;
+    }
+
+        #SimpleCanleder_Year_Month .title li.middle {
+            width: 65px;
+            position: relative;
+            overflow: visible;
+        }
+
+            #SimpleCanleder_Year_Month .title li.middle select {
+                margin-top: -3px;
+            }
+
+            #SimpleCanleder_Year_Month .title li.middle .year_list {
+                width: 100px;
+                position: absolute;
+                background-color: lightgrey;
+                left: -20px;
+            }
+
+                #SimpleCanleder_Year_Month .title li.middle .year_list li {
+                    background-color: transparent;
+                    text-align: center;
+                    width: 45px;
+                    height: 20px;
+                }
+
+                #SimpleCanleder_Year_Month .title li.middle .year_list ul {
+                    clear: both;
+                }
+
+        #SimpleCanleder_Year_Month .title li, #SimpleCanleder_Year_Month .body li {
+            background-color: lavender;
+            list-style: none;
+            width: 30px;
+            height: 30px;
+            overflow: hidden;
+            margin-top: 5px;
+            margin-right: 5px;
+            float: left;
+            display: inline;
+            cursor: pointer;
+        }
+
+            #SimpleCanleder_Year_Month .title li.cur, #SimpleCanleder_Year_Month .body li.cur {
+                background-color: tomato;
+            }
+
+            #SimpleCanleder_Year_Month .title li.over, #SimpleCanleder_Year_Month .body li.over {
+                background-color: lightblue;
+            }
+
+            #SimpleCanleder_Year_Month .title li .inner, #SimpleCanleder_Year_Month .body li .inner {
+                padding-top: 8px;
+                text-align: center;
+            }
+
+    #SimpleCanleder_Year_Month .bottom {
+        height: 16px;
+        padding-top: 5px;
+        text-align: center;
+    }
+
+        #SimpleCanleder_Year_Month .bottom button.clear {
+            background-color: gainsboro;
+            border: 1px solid;
+            font-size: 12px;
+        }
