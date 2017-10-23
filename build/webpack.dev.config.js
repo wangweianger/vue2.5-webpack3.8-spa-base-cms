@@ -3,7 +3,7 @@ const webpack = require('webpack')
 const config = require('./webpack.base.config')
 const WebpackDevServer = require('webpack-dev-server')
 const compiler = webpack(config);
-const PROT = process.env.HTTP_PUSH || 8000
+const PROT = process.env.PROT || 8000
 
 const server = new WebpackDevServer(compiler, {
     hot: true,

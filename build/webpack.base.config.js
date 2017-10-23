@@ -6,7 +6,7 @@ const glob = require('glob');
 const htmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const vueLoaderConfig   = require("./vue-loader-config");
-const PROT = process.env.HTTP_PUSH || 8000
+const PROT = process.env.PROT || 8000
 
 //提取公共文件
 const CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin;
