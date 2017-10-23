@@ -6,6 +6,7 @@ const glob = require('glob');
 const htmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const vueLoaderConfig   = require("./vue-loader-config");
+const PROT = process.env.HTTP_PUSH || 8000
 
 //提取公共文件
 const CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin;
@@ -15,7 +16,11 @@ const projectName = "/";
 const config = {
         entry: {
             //assets:path.resolve(__dirname, '../src' + projectName + 'assets/html/js/assets.js'),
-            main:path.resolve(__dirname, '../src' + projectName + 'main.js'),
+            main:[
+                `webpack-dev-server/client?http://localhost:${PROT}/`,
+                "webpack/hot/dev-server",
+                path.resolve(__dirname, '../src' + projectName + 'main.js')
+            ]
         },
         output: {
             path: path.resolve(__dirname, '../dist'),
@@ -108,6 +113,7 @@ const config = {
             chunks: ['main','vendors'],
             favicon:path.resolve(__dirname, '../favicon.ico'),
         }),
+        new webpack.HotModuleReplacementPlugin()
     ],
 }
 

@@ -4,7 +4,7 @@
   "description": "demo",
   "main": "index.js",
   "scripts": {
-    "dev": "node build/webpack.dev.config.js",
+    "dev": "cross-env PROT=8000 node build/webpack.dev.config.js",
     "test": "webpack -d --progress --hide-modules --colors --config build/webpack.test.config.js",
     "build": "cross-env webpack -p --progress --hide-modules --colors --config build/webpack.product.config.js",
     "http-push": "cross-env HTTP_PUSH=http-push webpack -p --progress --hide-modules --colors --config build/webpack.product.config.js",
