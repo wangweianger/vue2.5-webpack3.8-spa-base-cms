@@ -36,9 +36,9 @@ json = Object.assign(json, {
 		if (!value) return;
 		let ty = gengefu || '-';
 		if (full) {
-			return moment(value).format('YYYY' + ty + 'MM' + ty + 'DD hh:mm:ss');
+			return new Date(value).format('yyyy' + ty + 'MM' + ty + 'dd hh:mm:ss');
 		} else {
-			return moment(value).format('YYYY' + ty + 'MM' + ty + 'DD');
+			return new Date(value).format('yyyy' + ty + 'MM' + ty + 'dd');
 		};
 	},
 	//limitTo过滤器

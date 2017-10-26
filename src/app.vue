@@ -60,7 +60,7 @@
 </template>
 
 <script>
-  	// import store from './vuex/store';
+  	import store from './vuex/store';
   	import totop from 'components/totop'
   	import top from 'commonvue/top'
   	import side from 'commonvue/side'
@@ -71,7 +71,7 @@
 	  		top,
 	  		side
 	  	},
-	    // store,
+	    store,
 	    data(){
 	    	return{
 	    		leftBarToggle:false,

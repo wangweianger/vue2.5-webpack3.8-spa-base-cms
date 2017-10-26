@@ -1,6 +1,8 @@
 import util from 'common/js/util'
 import popup from 'popup'
 
+require('./page.css');
+
 function Page(json) {
 	this.route = json.route;
 	this.routerName = json.routerName;

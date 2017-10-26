@@ -5,13 +5,19 @@ const fs = require("fs");
 const glob = require('glob');
 const htmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
-const vueLoaderConfig   = require("./vue-loader-config");
+const vueLoaderConfig = require("./vue-loader.config");
 const PROT = process.env.PROT || 8000
+
+// 多线程
+const HappyPack = require('happypack');
+const os = require('os');
+const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
 
 //提取公共文件
 const CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin;
 //项目名字
 const projectName = "/";
+
 //配置开始
 const config = {
         entry: {
@@ -32,23 +38,21 @@ const config = {
             rules: [{
                 test: /\.vue$/,
                 exclude: "/node_modules/",
-                loader: 'vue-loader',
-                options: vueLoaderConfig
-            }, 
+                loader: [ 'happypack/loader?id=vue' ]
+            },
             {
                 test: /\.js$/,
                 exclude: /node_modules|vue\/dist/,
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: ['env']
-                    }
-                }
+                loader: [ 'happypack/loader?id=js' ]
             }, 
+            {
+                test: /\.scss$/, 
+                loader: [ 'happypack/loader?id=sass' ]
+            },
             {
                 test:/\.css$/, 
                 use: ExtractTextPlugin.extract({
-                    fallback: "style-loader",
+                    fallback: 'vue-style-loader',
                     use: "css-loader"
                 })
             },
@@ -60,26 +64,17 @@ const config = {
             {
             　　test: /\.(woff|woff2|eot|ttf|svg)(\?.*$|$)/,
             　　loader: 'url-loader?importLoaders=1&limit=1000&name=fonts/[name].[ext]'
-        　　},
+        　　 },
             {
             　　test: /\.(xlsx|xls)(\?.*$|$)/,
             　　loader: 'url-loader?importLoaders=1&limit=8192&name=files/[name].[ext]'
         　　},
-            {
-                test: /\.scss$/, 
-                use: [{
-                    loader: "style-loader" // creates style nodes from JS strings 
-                }, {
-                    loader: "css-loader" // translates CSS into CommonJS 
-                }, {
-                    loader: "sass-loader" // compiles Sass to CSS 
-                }]
-            },
         ]},
     //自动补全识别后缀
     resolve: {
         extensions: ['.js', '.vue', '.json'],
         alias: {
+            vue$:'vue/dist/vue.runtime.common.js',
             components: path.resolve(__dirname, '../src' + projectName + 'components'),
             commonvue: path.resolve(__dirname, '../src' + projectName + 'commonvue'),
             pages: path.resolve(__dirname, '../src' + projectName + 'pages'),
@@ -91,6 +86,32 @@ const config = {
     },
     //插件
     plugins: [
+        //js 编译多线程 
+        new HappyPack({
+            id: 'js',
+            threadPool: happyThreadPool,
+            loaders: [{
+                loader: 'babel-loader',
+                options: {
+                    presets: [ 'env' ],
+                }
+            }],
+        }),
+        // sass 编译多线程
+        new HappyPack({
+            id: 'sass',
+            threadPool: happyThreadPool,
+            loaders: [ 'style-loader', 'css-loader', 'sass-loader' ]
+        }),
+        // vue 编译多线程
+        new HappyPack({
+            id: 'vue',
+            threadPool: happyThreadPool,
+            loaders:[{
+                loader: 'vue-loader',
+                options: vueLoaderConfig
+            }]
+        }),
         //提取css
         new ExtractTextPlugin("styles.css"),
         //全局注入变量

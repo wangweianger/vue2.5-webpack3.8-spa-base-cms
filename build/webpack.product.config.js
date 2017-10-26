@@ -1,18 +1,19 @@
 //生产环境
-var webpack = require('webpack')
-var config = require('./webpack.base.config')
-var path = require("path");
-var StringReplacePlugin = require("string-replace-webpack-plugin");
-var CleanWebpackPlugin = require('clean-webpack-plugin');
-var HttpPushWebpackPlugin = require('http-push-webpack-plugin');  //http-push
+const webpack = require('webpack')
+const config = require('./webpack.base.config')
+const path = require("path");
+const StringReplacePlugin = require("string-replace-webpack-plugin");
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const HttpPushWebpackPlugin = require('http-push-webpack-plugin');  //http-push
+const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin');
 
 //项目名字
-var projectName = "/";
+const projectName = "/";
 
 //生成生产环境目录
 config.output.path=path.resolve(__dirname, '../dist/production');
-config.output.filename ='[name].[chunkhash].js',
-config.output.chunkFilename ="[name].[chunkhash].js"
+config.output.filename ='js/[name].[hash].js',
+config.output.chunkFilename ="js/[name].[hash].js"
 
 //打包api 替换
 config.module.loaders=(config.module.loaders || []).concat([
@@ -37,30 +38,38 @@ config.module.loaders=(config.module.loaders || []).concat([
 ])
 
 config.plugins = (config.plugins || []).concat([
+    // 增加DllReferencePlugin配置
+    new webpack.DllReferencePlugin({
+        context:path.join(__dirname, '../dist/production/libs'), 
+        manifest: require("../dist/production/libs/vendor-manifest.json")
+    }),
     // 清除上一次生成的文件
-    new CleanWebpackPlugin(['production'], {
+    new CleanWebpackPlugin(['production/js'], {
         root: path.resolve(__dirname, '../dist'),
-        verbose: true, 
+        verbose: true,
         dry: false,
+    }),
+    // 多线程压缩
+    new ParallelUglifyPlugin({
+        // 支持es6打包
+        uglifyES: {
+            output: {
+                comments: false
+            },
+            compress: {
+                warnings: false
+            }
+        }
     }),
     //string替换
     new StringReplacePlugin(),
-    // this allows uglify to strip all warnings
-    // from Vue.js source code.
     new webpack.DefinePlugin({
         'process.env': {
             NODE_ENV: '"production"'
         }
     }),
-    // This minifies not only JavaScript, but also
-    // the templates (with html-minifier) and CSS (with cssnano)!
-    //弱化警告信息
-    new webpack.optimize.UglifyJsPlugin({
-        compress: {
-            warnings: false
-        }
-    }),
-    new webpack.optimize.OccurenceOrderPlugin()
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.optimize.ModuleConcatenationPlugin(),
 ])
 
 // webpack http-push 上传
@@ -77,3 +86,10 @@ if(process.env.HTTP_PUSH === 'http-push' ){
 
 
 module.exports = config
+
+
+
+
+
+
+
