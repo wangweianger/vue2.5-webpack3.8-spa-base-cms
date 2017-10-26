@@ -9,43 +9,14 @@
 >  * babel            es6转译工具，用最前言的javascript做前端开发
 
 
-## 目录结构
+## 优化说明
+>  * DllPlugin和DllReferencePlugin  项目中不更改js不需要重复构建 例如：vue,vuex,vue-router 等等
+     参考配置： webpack.dll.config.js
+>  * happypack 优化 针对于.vue、.js、.scss 文件进行多线程编译
+>  * webpack-parallel-uglify-plugin  插件替换 webpack 自带的UglifyJS 插件  支持打包es6语法
+>  * Webpack 3 的新功能：Scope Hoisting 新增配置插件  new webpack.optimize.ModuleConcatenationPlugin()
 
-```
-- vue-loader/
-  + package.json //npm配置文件
-  + index.html //入口html
-  - node_modules //npm加载的模块
-  - build //webpack 配置文件
-    + webpack.base.config.js //基本配置
-    + webpack.dev.config.js //开发环境
-    + webpack.product.config.js //生产环境
-  - src //开发资源目录
-    - assets //一些资源
-      + css  
-      + js
-      + img
-    - components //vue组件
-      + home.vue 
-      + index.vue
-      + user.vue
-      + userDetails.vue
-  -vuex  //状态等管理
-    -actions  
-      +indexActions.js
-      ...
-    -modles
-      +indexModles.js
-      ...
-    +getters.js
-    +mutation-types.js
-    +store.js
-    + app.vue //布局文件
-    + main.js  //入口文件
-    + filter.js //vue的过滤器
-    + router.js //vue路由插件
-
-```
+### 优化之后构建速度明显提高
 
 ## 项目步骤
 
@@ -68,10 +39,13 @@ npm run dev
 ```
 
 
-4.打包生产文件
+4.打包生产文件  打生产报需要构建一次 dll 命令：即经常不会改动的文件
 
 ```
-npm run build
+npm run build:dll   //此命令一般只运行一次 若后期依赖项目有改动才运行
+
+npm run build  //每次生产包运行
+
 ``` 
 
 ##大致说明
