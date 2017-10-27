@@ -38,19 +38,6 @@
                     totalcount:100,
                     isSearch:true,
                 },
-                datas:{
-                    istime:true
-                },
-                begin:1477630954604,
-                end:1477630954604,
-            }
-        },
-        vuex: {
-            getters: {
-                // index: ({ index }) => index
-            },
-            actions: {
-
             }
         },
         mounted() {
@@ -66,7 +53,4 @@
         }
     }
 </script>
-<style lang="sass">
-
-</style>
 
