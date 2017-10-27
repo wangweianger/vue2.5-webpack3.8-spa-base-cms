@@ -14,7 +14,7 @@ require('common/js/jquery.cookie.js')
 require('common/js/format');
 
 //分页
-require('page');
+require('page'); 
 
 //bootstrap
 require('common/lib/bootstrap/css/bootstrap.css');

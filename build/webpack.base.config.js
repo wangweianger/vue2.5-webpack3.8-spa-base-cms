@@ -35,8 +35,7 @@ const config = {
             chunkFilename: "[name].js"
         },
         module: {
-            rules: [
-            {
+            rules: [{
                 test: /\.vue$/,
                 exclude: "/node_modules/",
                 loader: ['happypack/loader?id=vue']
