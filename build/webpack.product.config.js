@@ -4,7 +4,7 @@ const config = require('./webpack.base.config')
 const path = require("path");
 const StringReplacePlugin = require("string-replace-webpack-plugin");
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const HttpPushWebpackPlugin = require('http-push-webpack-plugin');  //http-push
+const HttpPushWebpackPlugin = require('http-push-webpack-plugin');  
 const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin');
 
 //项目名字

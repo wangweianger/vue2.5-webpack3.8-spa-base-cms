@@ -3,7 +3,7 @@ module.exports = {
         js:[{
             loader:'babel-loader',
             options:{
-                presets: [ 'env' ],
+                presets: [ 'env' ], 
             }
         }],
         css:'vue-style-loader!css-loader',

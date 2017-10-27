@@ -78,7 +78,6 @@ module.exports = {
             name: '[name]_library', 
             context:path.join(__dirname, distpath), 
         }),
-        // 压缩打包的文件，与该文章主线无关
         new webpack.optimize.UglifyJsPlugin({
             compress: {
                 warnings: false
