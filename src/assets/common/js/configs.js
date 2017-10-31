@@ -7,7 +7,7 @@ module.exports={
 	homeUrl: "/index.html",    
 
 	//根接口
-	baseApi:'/',
+	baseApi:'/api/',
 
 	//ajax 请求超时时间
 	ajaxtimeout:12000,
