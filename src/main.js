@@ -4,7 +4,7 @@ import VueRouter from 'vue-router'
 import routes from './router'
 import filter from './filter'
 import $ from 'jquery'
-import config from 'common/js/config'
+import config from 'common/js/configs'
 import common from 'common/js/common'
 import util from 'common/js/util'
 import popup from 'popup'
@@ -14,7 +14,7 @@ require('common/js/jquery.cookie.js')
 require('common/js/format');
 
 //分页
-require('page'); 
+require('page');
 
 //bootstrap
 require('common/lib/bootstrap/css/bootstrap.css');

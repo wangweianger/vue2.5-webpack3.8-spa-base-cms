@@ -12,7 +12,6 @@
 </template> 
 
 <script>
-import config from 'common/js/config'
 import page from 'page'
 import propsync from 'common/lib/mixin/propsync'
 

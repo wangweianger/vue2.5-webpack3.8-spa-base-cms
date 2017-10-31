@@ -4,7 +4,7 @@ const config = require('./webpack.base.config')
 const path = require("path");
 const StringReplacePlugin = require("string-replace-webpack-plugin");
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const HttpPushWebpackPlugin = require('http-push-webpack-plugin');  
+const HttpPushWebpackPlugin = require('http-push-webpack-plugin');  //http-push
 const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin');
 
 //项目名字
@@ -15,28 +15,29 @@ config.output.path=path.resolve(__dirname, '../dist/production');
 config.output.filename ='js/[name].[hash].js',
 config.output.chunkFilename ="js/[name].[hash].js"
 
-//打包api 替换
-config.module.loaders=(config.module.loaders || []).concat([
-  { 
-    test: path.resolve(__dirname, '../src' + projectName + 'assets/common/js/config.js'),
-    loader: StringReplacePlugin.replace({
-      replacements: [
-          {
-              pattern: /127.0.0.1:8080/,
-              replacement: function (match, p1, offset) {
-                  return '192.168.1.10';
-              }
-          },
-          {
-              pattern: /test.cs0526.allpyra.com/,
-              replacement: function (match, p1, offset) {
-                  return 'www.seosiwei.com';
-              }
-          }
-      ]})
-  }
-])
+// loaders
+config.module.rules = (config.module.rules || []).concat([{
+        // index.html script脚本引入
+        test: path.resolve(__dirname, '../src' + projectName + 'index.html'),
+        loader: 'webpack-dll-loader',
+        exclude: "/node_modules/",
+        options:{
+            publicPath:'/libs/',
+            manifest:path.resolve(__dirname, '../dist' + projectName + 'production/libs/vendor-manifest.json')
+        }
+    },{
+        //打包字符串替换
+        test: path.resolve(__dirname, '../src/assets/common/js/configs.js'),
+        loader: 'string-replace-loader',
+        exclude: "/node_modules/",
+        query: {
+            multiple: [
+                { search: /123456/, replace: '987654321' },
+            ]
+        }
+    }])
 
+// 插件
 config.plugins = (config.plugins || []).concat([
     // 增加DllReferencePlugin配置
     new webpack.DllReferencePlugin({
@@ -82,8 +83,6 @@ if(process.env.HTTP_PUSH === 'http-push' ){
         }),
     ])
 };
-
-
 
 module.exports = config
 

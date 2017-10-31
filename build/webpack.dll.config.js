@@ -25,8 +25,8 @@ module.exports = {
     },
     output: {
         path: path.join(__dirname, distpath), // 打包后文件输出的位置
-        filename: '[name].dll.js',
-        library: '[name]_library' 
+        filename: '[name]_[hash].js',
+        library: '[name]_[hash]' 
     },
     module: {
         rules: [
@@ -75,9 +75,10 @@ module.exports = {
         }),
         new webpack.DllPlugin({
             path: path.join(__dirname, distpath, '[name]-manifest.json'),
-            name: '[name]_library', 
+            name: '[name]_[hash]', 
             context:path.join(__dirname, distpath), 
         }),
+        // 压缩打包的文件，与该文章主线无关
         new webpack.optimize.UglifyJsPlugin({
             compress: {
                 warnings: false

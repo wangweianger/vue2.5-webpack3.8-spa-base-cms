@@ -38,7 +38,7 @@ const config = {
             rules: [{
                 test: /\.vue$/,
                 exclude: "/node_modules/",
-                loader: ['happypack/loader?id=vue']
+                loader: [ 'happypack/loader?id=vue' ]
             },
             {
                 test: /\.js$/,
@@ -117,11 +117,6 @@ const config = {
         }),
         //提取css
         new ExtractTextPlugin("styles.css"),
-        //全局注入变量
-        // new webpack.ProvidePlugin({
-        //     $: "jquery",
-        //     jQuery: "jquery",
-        // }),
         new CommonsChunkPlugin({
             name: 'vendors', // 将公共模块提取，生成名为`vendors`的chunk
             chunks: ['main'],

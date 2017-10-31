@@ -1,6 +1,4 @@
 
-import config from './config'
-import popup from 'popup'
 
 //util 公共对象函数
 class util{

@@ -21,7 +21,8 @@ const server = new WebpackDevServer(compiler, {
     proxy: {
         '/api': {
             target: 'https://other-server.example.com',
-            secure: false
+            secure: false,
+            pathRewrite: {'^/api' : ''}
         }
     }
 });

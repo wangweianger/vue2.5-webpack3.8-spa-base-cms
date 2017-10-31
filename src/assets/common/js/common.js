@@ -1,6 +1,4 @@
 
-import config from './config'
-import popup from 'popup'
 
 //common 公共 AJAX 函数
 class common{

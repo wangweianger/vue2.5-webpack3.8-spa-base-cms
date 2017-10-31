@@ -21,4 +21,6 @@ module.exports={
  	//pagesize 分页数量
  	pageSize:20,
 
+ 	wangwei:'123456'
+
 };

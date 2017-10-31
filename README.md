@@ -18,8 +18,6 @@
 
 ### 优化之后构建速度明显提高
 
-### 构建优化文章说明：http://blog.seosiwei.com/detail/9 
-
 ## 项目步骤
 
 1.安装node.js
