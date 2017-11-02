@@ -2,12 +2,14 @@ const path = require("path");
 const webpack = require("webpack");
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
-const distpath = '../dist/production/libs';
+const basePath = process.env.DLL == 'build'?'production':'test';
+const hashush  = process.env.DLL == 'build'?'[name]_[hash]':'[name]';
+const distpath = `../dist/${basePath}/libs`;
 
 module.exports = {
     // 你想要打包的模块的数组
     entry: {
-        vendor: [
+        libs: [
             'vue',
             'vuex',
             'vue-router',
@@ -25,8 +27,8 @@ module.exports = {
     },
     output: {
         path: path.join(__dirname, distpath), // 打包后文件输出的位置
-        filename: '[name]_[hash].js',
-        library: '[name]_[hash]' 
+        filename: `${hashush}.js`,
+        library: hashush 
     },
     module: {
         rules: [
@@ -68,14 +70,14 @@ module.exports = {
     },
     plugins: [
         // 清除上一次生成的文件
-        new CleanWebpackPlugin(['production/libs'], {
+        new CleanWebpackPlugin([`${basePath}/libs`], {
             root: path.resolve(__dirname, '../dist'),
             verbose: true, 
             dry: false,
         }),
         new webpack.DllPlugin({
             path: path.join(__dirname, distpath, '[name]-manifest.json'),
-            name: '[name]_[hash]', 
+            name: hashush, 
             context:path.join(__dirname, distpath), 
         }),
         // 压缩打包的文件，与该文章主线无关

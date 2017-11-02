@@ -6,8 +6,9 @@
   "scripts": {
     "dev": "cross-env PROT=8000 node build/webpack.dev.config.js",
     "test": "webpack -d --progress --hide-modules --colors --config build/webpack.test.config.js",
+    "test:dll": "cross-env DLL=test webpack --progress --config build/webpack.dll.config.js",
     "build": "webpack --progress --colors --config build/webpack.product.config.js",
-    "build:dll": "webpack --progress --config build/webpack.dll.config.js",
+    "build:dll": "cross-env DLL=build webpack --progress --config build/webpack.dll.config.js",
     "test-build": "npm run test && node ./build/http.push.tar.gz.js",
     "dist-build": "cross-env HTTP_PUSH=dist-build && npm run build",
     "online-build": "cross-env HTTP_PUSH=online-build npm run build"
