@@ -18,6 +18,8 @@
 
 ### 优化之后构建速度明显提高
 
+### webpack优化构建说明：http://blog.seosiwei.com/detail/9
+
 ## 项目步骤
 
 1.安装node.js
