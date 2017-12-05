@@ -22,7 +22,7 @@ config.module.rules = (config.module.rules || []).concat([{
         exclude: "/node_modules/",
         options:{
             publicPath:'/libs/',
-            manifest:path.resolve(__dirname, '../dist' + projectName + 'production/libs/libs-manifest.json')
+            manifest:path.resolve(__dirname, '../dist' + projectName + 'production/libs/vendor-manifest.json')
         }
     },{
         //打包字符串替换
@@ -41,7 +41,7 @@ config.plugins = (config.plugins || []).concat([
     // 增加DllReferencePlugin配置
     new webpack.DllReferencePlugin({
         context:path.join(__dirname, '../dist/production/libs'), 
-        manifest: require("../dist/production/libs/libs-manifest.json")
+        manifest: require("../dist/production/libs/vendor-manifest.json")
     }),
     // 清除上一次生成的文件
     new CleanWebpackPlugin(['production/js'], {
@@ -69,6 +69,7 @@ config.plugins = (config.plugins || []).concat([
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.ModuleConcatenationPlugin(),
 ])
+config.devtool = false;
 
 // webpack http-push 上传
 if(process.env.HTTP_PUSH === 'http-push' ){

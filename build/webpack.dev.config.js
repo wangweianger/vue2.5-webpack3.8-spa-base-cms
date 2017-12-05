@@ -2,9 +2,19 @@
 const webpack = require('webpack')
 const config = require('./webpack.base.config')
 const WebpackDevServer = require('webpack-dev-server')
-const compiler = webpack(config);
+const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 const PROT = process.env.PROT || 8000
 
+config.entry.main = (config.entry.main || []).concat([   
+    `webpack-dev-server/client?http://localhost:${PROT}/`,
+    "webpack/hot/dev-server",
+])
+config.plugins = (config.plugins || []).concat([
+    new webpack.HotModuleReplacementPlugin(),
+    new OpenBrowserPlugin({ url: `http://127.0.0.1:${PROT}` })
+])
+
+const compiler = webpack(config);
 const server = new WebpackDevServer(compiler, {
     hot: true,
     inline: true,
@@ -19,7 +29,7 @@ const server = new WebpackDevServer(compiler, {
         colors: true 
     },
     proxy: {
-        '/api': {
+        '/api/': {
             target: 'https://other-server.example.com',
             secure: false,
             pathRewrite: {'^/api' : ''}

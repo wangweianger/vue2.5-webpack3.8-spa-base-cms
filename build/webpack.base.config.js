@@ -6,7 +6,6 @@ const glob = require('glob');
 const htmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const vueLoaderConfig = require("./vue-loader.config");
-const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 const PROT = process.env.PROT || 8000
 
 // 多线程
@@ -24,8 +23,6 @@ const config = {
         entry: {
             //assets:path.resolve(__dirname, '../src' + projectName + 'assets/html/js/assets.js'),
             main:[
-                `webpack-dev-server/client?http://localhost:${PROT}/`,
-                "webpack/hot/dev-server",
                 path.resolve(__dirname, '../src' + projectName + 'main.js')
             ]
         },
@@ -133,8 +130,6 @@ const config = {
             chunks: ['main','vendors'],
             favicon:path.resolve(__dirname, '../favicon.ico'),
         }),
-        new webpack.HotModuleReplacementPlugin(),
-        new OpenBrowserPlugin({ url: `http://127.0.0.1:${PROT}` })
     ],
 }
 
