@@ -62,4 +62,4 @@ vuex  :  一个专门为 Vue.js 应用设计的状态管理架构
 ```
 
 ### DEMO图片
-![](https://github.com/wangweianger/web-performance-monitoring-system/blob/master/demo/01.png "")
+![](https://github.com/wangweianger/vue2.5-webpack3.8-spa-base-cms/blob/master/imgs/01.png "")
