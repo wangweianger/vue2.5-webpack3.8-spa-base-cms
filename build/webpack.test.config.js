@@ -5,9 +5,6 @@ var path = require("path");
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin');
 
-//项目名字
-var projectName = "/";
-
 //生成测试环境目录
 config.output.path=path.resolve(__dirname, '../dist/test');
 config.output.filename ='js/[name].js',
@@ -16,16 +13,16 @@ config.output.chunkFilename ="js/[name].js"
 // loaders
 config.module.rules = (config.module.rules || []).concat([{
         // index.html script脚本引入
-        test: path.resolve(__dirname, '../src' + projectName + 'index.html'),
+        test: path.resolve(__dirname, '../src/index.html'),
         loader: 'webpack-dll-loader',
         exclude: "/node_modules/",
         options:{
             publicPath:'/libs/',
-            manifest:path.resolve(__dirname, '../dist' + projectName + 'test/libs/libs-manifest.json')
+            manifest:path.resolve(__dirname, '../dist/test/libs/libs-manifest.json')
         }
     },{
         //打包字符串替换
-        test: path.resolve(__dirname, '../src/assets/common/js/configs.js'),
+        test: path.resolve(__dirname, '../src/assets/common/js/config.js'),
         loader: 'string-replace-loader',
         exclude: "/node_modules/",
         query: {

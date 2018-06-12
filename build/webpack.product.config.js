@@ -6,9 +6,6 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HttpPushWebpackPlugin = require('http-push-webpack-plugin');  //http-push
 const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin');
 
-//项目名字
-const projectName = "/";
-
 //生成生产环境目录
 config.output.path=path.resolve(__dirname, '../dist/production');
 config.output.filename ='js/[name].[hash].js',
@@ -17,16 +14,16 @@ config.output.chunkFilename ="js/[name].[hash].js"
 // loaders
 config.module.rules = (config.module.rules || []).concat([{
         // index.html script脚本引入
-        test: path.resolve(__dirname, '../src' + projectName + 'index.html'),
+        test: path.resolve(__dirname, '../src/index.html'),
         loader: 'webpack-dll-loader',
         exclude: "/node_modules/",
         options:{
             publicPath:'/libs/',
-            manifest:path.resolve(__dirname, '../dist' + projectName + 'production/libs/vendor-manifest.json')
+            manifest:path.resolve(__dirname, '../dist/production/libs/libs-manifest.json')
         }
     },{
         //打包字符串替换
-        test: path.resolve(__dirname, '../src/assets/common/js/configs.js'),
+        test: path.resolve(__dirname, '../src/assets/common/js/config.js'),
         loader: 'string-replace-loader',
         exclude: "/node_modules/",
         query: {
@@ -41,7 +38,7 @@ config.plugins = (config.plugins || []).concat([
     // 增加DllReferencePlugin配置
     new webpack.DllReferencePlugin({
         context:path.join(__dirname, '../dist/production/libs'), 
-        manifest: require("../dist/production/libs/vendor-manifest.json")
+        manifest: require("../dist/production/libs/libs-manifest.json")
     }),
     // 清除上一次生成的文件
     new CleanWebpackPlugin(['production/js'], {
